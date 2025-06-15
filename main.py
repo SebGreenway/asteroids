@@ -19,10 +19,11 @@ def main():
     print(f'Screen height: {SCREEN_HEIGHT}')
     clock = pygame.time.Clock()
     dt = 0
+    game_over = False
     Player.containers = (updatable, drawable)
     Asteroid.containers = (updatable, drawable, asteroids)
     AsteroidField.containers = updatable
-    Shot.containers = (updatable, drawable)
+    Shot.containers = (updatable, drawable, shots)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroid_field = AsteroidField()
     while True:
@@ -30,11 +31,20 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
+        
         updatable.update(dt)
         for asteroid in asteroids:
             if player.collides_with(asteroid):
                 print("Game over!")
+                game_over = True
                 # Handle collision (e.g., end game, reduce health, etc.)
+        for shot in shots:
+            for asteroid in asteroids:
+                if shot.collides_with(asteroid):
+                    print("Shot hit an asteroid!")
+                    # Handle collision (e.g., remove asteroid, increase score, etc.)
+                    shot.kill()
+                    asteroid.split()
         screen.fill(BLACK)  # Fill the screen with black
         for sprite in drawable:
             sprite.draw(screen)

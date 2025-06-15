@@ -13,3 +13,4 @@ PLAYER_TURN_SPEED = 180  # degrees per second
 PLAYER_SPEED = 200  # pixels per second
 PLAYER_SHOOT_SPEED = 500  # pixels per second
 SHOT_RADIUS = 5
+PLAYER_SHOOT_TIMER = 0.3
